@@ -1,0 +1,75 @@
+{% extends 'layout/base.html' %}
+  
+  {% block title %} Create account {% endblock %}
+
+  {% block body %}
+    
+<section class="py-5">
+  <div class="container px-5 my-5">
+      <div class="row gx-5 justify-content-center">
+          <div class="col-lg-6">
+              <div class="text-center mb-5">
+                  <h1 class="fw-bolder">Créer un compte</h1>
+                  {%if not wrong_info and not not_exists %}
+                  <p class="lead fw-normal text-muted mb-0"></p>
+                  {% elif wrong_info %} 
+                  <p class="alert alert-danger">Mot de passe incorrect !</p>
+                  {% else %} 
+                  <p class="alert alert-danger">L'utilisateur n'existe pas ! <a href="{{url_for('creer_compte')}}">Creer un compte ? </a></p>
+                  {% endif %}
+              </div>
+          </div>
+      </div>
+      <div class="row gx-5 align-items-center">
+          <div class="col"><div class="text-center mb-5">
+              <p class="lead fw-normal text-muted">
+                  <form id="creation_form" method="post">
+                      <div class="form-floating mb-4">
+                          <input type="text" id="username" class="form-control" name="username" placeholder="Qui suis-je?">
+                          <label for="username">Nom d'utilisateur</label>
+                      </div>
+                      <div class="form-floating mb-4">
+                          <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe">
+                          <label for="password">Mot de passe</label>
+                      </div>
+                      <div class="form-floating mb-4">
+                        <input type="password" id="password_confirm" name="password_confirm" class="form-control" placeholder="Mot de passe">
+                        <label for="password_confirm">Confirmer le mot de passe</label>
+                    </div>
+                      <input class="btn btn-primary btn-block mb-4" type="button" onclick="check_password()" value="Se connecter">
+                  </form>
+          </div>
+      </div>
+  </div>
+      <div class="row gx-5 justify-content-center">
+          <div class="col-lg-6">
+              <div class="text-center mb-5">
+                  <p class="lead fw-normal text-muted">
+                      Pas encore de compte ?
+                      <a class="text-decoration-none" href="">
+                          Créer votre compte maintenant !
+                          <i class="bi-arrow-right"></i>
+                      </a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+    
+{% endblock %}
+{% block extra_script %} 
+<script>
+    function check_password() {
+        const password1 = document.getElementById("password").value 
+        const password2 = document.getElementById("password_confirm").value
+        if(password1 === password2) {
+            send_form('creation_form')
+        } else {
+          document.getElementById("modal_body").innerHTML = " Les deux mots de passe ne correspondent pas "
+          document.getElementById("modal_footer").innerHTML = '<button type="button" class="btn btn-error" data-dismiss="modal">Ok</button>'
+          document.getElementById("modal-title").innerHTML = "Erreur"
+          $("#confirm_modal").modal()
+        }
+      }
+</script>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'layout/base.html' %}
+  
+  {% block title %} Login {% endblock %}
+
+  {% block body %}
+    
+<section class="py-5">
+  <div class="container px-5 my-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 d-flex justify-content-center">
+              <div class="text-center mb-5">
+                  <h1 class="fw-bolder">Se connecter</h1>
+                  {%if not wrong_info and not not_exists %}
+                  <p class="lead fw-normal text-muted mb-0">Vous revoilà ! On joue ?</p>
+                  {% elif wrong_info %} 
+                  <p class="alert alert-danger">Mot de passe incorrect !</p>
+                  {% else %} 
+                  <p class="alert alert-danger">L'utilisateur n'existe pas ! <a href="{{url_for('creer_compte')}}">Creer un compte ? </a></p>
+                  {% endif %}
+              </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+          <div class="col"><div class="text-center mb-5">
+              <p class="lead fw-normal text-muted">
+                  <form id="login_form" method="post">
+                      <div class="form-floating mb-4">
+                          <input type="text" id="username" class="form-control" name="username" placeholder="Qui suis-je?">
+                          <label for="username">Nom d'utilisateur</label>
+                      </div>
+                      <div class="form-floating mb-4">
+                          <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe">
+                          <label for="password">Mot de passe</label>
+                      </div>
+                      <input class="btn btn-primary btn-block mb-4" type="button" onclick="send_form('#login_form')" value="Se connecter">
+                  </form>
+          </div>
+      </div>
+  </div>
+      <div class="row gx-5 justify-content-center">
+          <div class="col-lg-6">
+              <div class="text-center mb-5">
+                  <p class="lead fw-normal text-muted">
+                      Pas encore de compte ?
+                      <a class="text-decoration-none" href="{{url_for('create_account')}}" >
+                          Créer votre compte maintenant !
+                          <i class="bi-arrow-right"></i>
+                      </a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+    
+{% endblock %}
